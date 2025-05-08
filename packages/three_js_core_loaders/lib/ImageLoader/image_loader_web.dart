@@ -3,6 +3,7 @@ import 'dart:js_interop';
 import 'dart:typed_data';
 import 'package:web/web.dart' as html;
 import 'dart:convert';
+import 'dart:ui' as ui;
 import 'package:three_js_core/three_js_core.dart';
 
 import '../utils/blob.dart';
@@ -128,14 +129,28 @@ Future<ImageElement?> processImage(Uint8List? bytes, String? url, bool flipY) {
   if(bytes != null){
     html.HTMLImageElement imageElement = createImageElementFromBytes(bytes, url);
     //image = image?.convert(format:Format.uint8,numChannels: 4);
-    completer.complete(
-      ImageElement(
-        url: url,
-        data: imageElement,
-        width: imageElement.width,
-        height: imageElement.height
-      )
+
+    int width = 0;
+    int height = 0;
+    if (imageElement.width == 0 || imageElement.height == 0) {
+      final codec = await ui.instantiateImageCodec(bytes);
+      final frameInfo = await codec.getNextFrame();
+      frameInfo.image;
+      width = frameInfo.image.width;
+      height = frameInfo.image.height;
+    } else {
+      width = imageElement.width;
+      height = imageElement.height;
+    }
+
+    final imageElem = ImageElement(
+      url: url,
+      data: imageElement,
+      width: width,
+      height: height,
     );
+
+    completer.complete(imageElem);
   }
   else{
     final imageDom = html.HTMLImageElement();
