@@ -17,7 +17,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  three_js_core_loaders: ^0.1.0
+  three_js_core_loaders:
+    path: ../three_js_core_loaders/
+    version: any
   three_js_core: ^0.1.0
   three_js_math: ^0.1.0
     
