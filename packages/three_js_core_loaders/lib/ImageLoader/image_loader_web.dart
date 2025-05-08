@@ -124,7 +124,7 @@ html.HTMLImageElement createImageElementFromBytes(Uint8List bytes, [String? dime
 }
 
 // Fixed for web and bytes sent
-Future<ImageElement?> processImage(Uint8List? bytes, String? url, bool flipY) {
+Future<ImageElement?> processImage(Uint8List? bytes, String? url, bool flipY) async {
   final completer = Completer<ImageElement>();
   if(bytes != null){
     html.HTMLImageElement imageElement = createImageElementFromBytes(bytes, url);
