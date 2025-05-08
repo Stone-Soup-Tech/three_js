@@ -17,25 +17,39 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  three_js_math: ^0.1.0
+  three_js_math:
+    path: ../three_js_math/
+    version: any
   three_js_advanced_loaders:
     path: ../three_js_advanced_loaders/
     version: any
-  three_js_animations: ^0.1.0
-  three_js_controls: ^0.1.0
-  three_js_core: ^0.1.3
+  three_js_animations:
+    path: ../three_js_animations/
+    version: any
+  three_js_controls:
+    path: ../three_js_controls/
+    version: any
+  three_js_core:
+    path: ../three_js_core/
+    version: any
   three_js_core_loaders:
     path: ../three_js_core_loaders/
     version: any
-  three_js_curves: ^0.1.0
+  three_js_curves:
+    path: ../three_js_curves/
+    version: any
   three_js_simple_loaders:
     path: ../three_js_simple_loaders/
     version: any
   three_js_text:
     path: ../three_js_text/
     version: any
-  three_js_audio: ^0.1.0
-  three_js_geometry: ^0.1.0
+  three_js_audio:
+    path: ../three_js_audio/
+    version: any
+  three_js_geometry:
+    path: ../three_js_geometry/
+    version: any
 
 dev_dependencies:
   flutter_test:
