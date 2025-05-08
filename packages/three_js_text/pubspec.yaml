@@ -17,7 +17,9 @@ dependencies:
   three_js_math:
     path: ../three_js_math/
     version: any
-  three_js_curves: ^0.1.0
+  three_js_curves:
+    path: ../three_js_curves/
+    version: any
   three_js_core_loaders:
     path: ../three_js_core_loaders/
     version: any
