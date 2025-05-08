@@ -29,7 +29,9 @@ dependencies:
     version: any
   three_js_curves: ^0.1.0
   three_js_simple_loaders: ^0.1.0
-  three_js_text: ^0.1.0
+  three_js_text:
+    path: ../three_js_core_loaders/
+    version: any
   three_js_audio: ^0.1.0
   three_js_geometry: ^0.1.0
 
