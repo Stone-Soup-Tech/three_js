@@ -19,15 +19,27 @@ dependencies:
   xml: ^6.5.0
   flutter:
     sdk: flutter
-  three_js_core: ^0.1.0
+  three_js_core:
+    path: ../three_js_core/
+    version: any
   three_js_core_loaders:
     path: ../three_js_core_loaders/
     version: any
-  three_js_curves: ^0.1.0
-  three_js_math: ^0.1.0
-  three_js_geometry: ^0.1.0
-  three_js_animations: ^0.1.0
-  three_js_controls: ^0.1.0
+  three_js_curves:
+    path: ../three_js_curves/
+    version: any
+  three_js_math:
+    path: ../three_js_math/
+    version: any
+  three_js_geometry:
+    path: ../three_js_geometry/
+    version: any
+  three_js_animations:
+    path: ../three_js_animations/
+    version: any
+  three_js_controls:
+    path: ../three_js_controls/
+    version: any
     
 dev_dependencies:
   flutter_test:

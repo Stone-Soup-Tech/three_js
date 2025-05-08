@@ -11,8 +11,12 @@ dependencies:
   flutter:
     sdk: flutter
   audioplayers: ^6.2.0
-  three_js_core: ^0.1.0
-  three_js_math: ^0.1.0
+  three_js_core:
+    path: ../three_js_core/
+    version: any
+  three_js_math:
+    path: ../three_js_math/
+    version: any
   three_js_core_loaders:
     path: ../three_js_core_loaders/
     version: any
