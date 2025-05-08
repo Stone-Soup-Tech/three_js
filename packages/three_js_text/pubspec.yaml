@@ -13,7 +13,9 @@ dependencies:
   typr_dart: ^0.0.2
   opentype_dart: ^0.0.1
 
-  three_js_core: ^0.1.0
+  three_js_core:
+    path: ../three_js_core/
+    version: any
   three_js_math:
     path: ../three_js_math/
     version: any
