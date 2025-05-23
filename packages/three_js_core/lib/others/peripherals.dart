@@ -124,9 +124,13 @@ class PeripheralsState extends State<Peripherals> {
       },
       child:GestureDetector(
         onScaleUpdate: (event){
-          double s = event.scale-_prevScale < 0?1:-1;
-          _onScaleEvent(context, PeripheralType.wheel, {'scale':s});
-          _prevScale = event.scale;
+          if (event.pointerCount > 1) {
+            double s = event.scale-_prevScale < 0?1:-1;
+            _onScaleEvent(context, PeripheralType.wheel, {'scale':s});
+            _prevScale = event.scale;
+          } else {
+            // There's only 1 pointer on screen. This is not a scale event.
+          }
         },
         child: Listener(
           onPointerPanZoomStart: panGestureRecognizer.addPointerPanZoom,
