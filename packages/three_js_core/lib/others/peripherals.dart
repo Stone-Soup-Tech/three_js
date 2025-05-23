@@ -56,6 +56,7 @@ class PeripheralsState extends State<Peripherals> {
   late final PanGestureRecognizer panGestureRecognizer;
 
   double _prevScale = 0;
+  int _pointers = 0;
 
   @override
   void initState() {
@@ -123,7 +124,7 @@ class PeripheralsState extends State<Peripherals> {
         }
       },
       child:GestureDetector(
-        onScaleUpdate: (event){
+        onScaleUpdate: (event) {
           if (event.pointerCount > 1) {
             double s = event.scale-_prevScale < 0?1:-1;
             _onScaleEvent(context, PeripheralType.wheel, {'scale':s});
@@ -140,6 +141,7 @@ class PeripheralsState extends State<Peripherals> {
             }
           },
           onPointerDown: (PointerDownEvent event) {
+            _pointers++;
             _onPointerEvent(context, PeripheralType.pointerdown, event);
             FocusScope.of(context).requestFocus(focusNode);
           },
@@ -147,6 +149,7 @@ class PeripheralsState extends State<Peripherals> {
             _onPointerEvent(context, PeripheralType.pointermove, event);
           },
           onPointerUp: (PointerUpEvent event) {
+            _pointers--;
             _onPointerEvent(context, PeripheralType.pointerup, event);
           },
           onPointerHover: (PointerHoverEvent event){
@@ -175,7 +178,7 @@ class PeripheralsState extends State<Peripherals> {
     _emit(type, wpe);
   }
   void _onPointerEvent(BuildContext context, PeripheralType type, PointerEvent event) {
-    final wpe = WebPointerEvent.fromPointerEvent(context, event);
+    final wpe = WebPointerEvent.fromPointerEvent(context, event, _pointers);
     _emit(type, wpe);
   }
 
@@ -210,6 +213,7 @@ class WebPointerEvent {
   int deltaMode = 0;
   double deltaY = 0.0;
   double deltaX = 0.0;
+  int pointerCount = 0;
 
   List<EventTouch> touches = [];
   List<EventTouch> changedTouches = [];
@@ -253,12 +257,13 @@ class WebPointerEvent {
     }
   }
 
-  static WebPointerEvent convertPointerEvent(BuildContext context, PointerEvent event) {
+  static WebPointerEvent convertPointerEvent(BuildContext context, PointerEvent event, int pointerCount) {
     final wpe = WebPointerEvent();
 
     wpe.pointerId = event.pointer;
     wpe.pointerType = getPointerType(event);
     wpe.button = getButton(event);
+    wpe.pointerCount = pointerCount;
 
     RenderBox getBox = context.findRenderObject() as RenderBox;
     final local = getBox.globalToLocal(event.position);
@@ -370,8 +375,8 @@ class WebPointerEvent {
     return wpe;
   }
 
-  factory WebPointerEvent.fromPointerEvent(BuildContext context, PointerEvent event) {
-    return convertPointerEvent(context, event);
+  factory WebPointerEvent.fromPointerEvent(BuildContext context, PointerEvent event, int pointerCount) {
+    return convertPointerEvent(context, event, pointerCount);
   }
   factory WebPointerEvent.fromDragEvent(BuildContext context, event) {
     return convertDragEvent(context, event);
