@@ -88,7 +88,6 @@ class PeripheralsState extends State<Peripherals> {
     }
     ..onEnd = (event){
       _onDragEvent(context, PeripheralType.pointerup, event);
-
     }
     ..onUpdate = (event){
       _onDragEvent(context, PeripheralType.pointermove,event);
@@ -124,7 +123,7 @@ class PeripheralsState extends State<Peripherals> {
         }
       },
       child:GestureDetector(
-        onScaleUpdate: (event) {
+        onScaleUpdate: (event){
           if (event.pointerCount > 1) {
             double s = event.scale-_prevScale < 0?1:-1;
             _onScaleEvent(context, PeripheralType.wheel, {'scale':s});
@@ -135,11 +134,11 @@ class PeripheralsState extends State<Peripherals> {
         },
         child: Listener(
           onPointerPanZoomStart: panGestureRecognizer.addPointerPanZoom,
-          onPointerSignal: (event) {
-            if (event is PointerScrollEvent) {
-              _onPointerEvent(context, PeripheralType.wheel, event);
-            }
-          },
+          // onPointerSignal: (event) {
+          //   if (event is PointerScrollEvent) {
+          //     _onPointerEvent(context, PeripheralType.wheel, event);
+          //   }
+          // },
           onPointerDown: (PointerDownEvent event) {
             _pointers++;
             _onPointerEvent(context, PeripheralType.pointerdown, event);
@@ -151,6 +150,10 @@ class PeripheralsState extends State<Peripherals> {
           onPointerUp: (PointerUpEvent event) {
             _pointers--;
             _onPointerEvent(context, PeripheralType.pointerup, event);
+          },
+          onPointerCancel: (PointerCancelEvent event) {
+            _pointers--;
+            _onPointerEvent(context, PeripheralType.pointercancel, event);
           },
           onPointerHover: (PointerHoverEvent event){
             _onPointerEvent(context, PeripheralType.pointerHover , event);
