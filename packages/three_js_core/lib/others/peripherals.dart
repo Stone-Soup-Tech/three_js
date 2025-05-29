@@ -173,11 +173,11 @@ class PeripheralsState extends State<Peripherals> {
   }
 
   void _onScaleEvent(BuildContext context, PeripheralType type, event) {
-    final wpe = WebPointerEvent.fromScaleEvent(context, event);
+    final wpe = WebPointerEvent.fromScaleEvent(context, event, _pointers);
     _emit(type, wpe);
   }
   void _onDragEvent(BuildContext context, PeripheralType type, event) {
-    final wpe = WebPointerEvent.fromDragEvent(context, event);
+    final wpe = WebPointerEvent.fromDragEvent(context, event, _pointers);
     _emit(type, wpe);
   }
   void _onPointerEvent(BuildContext context, PeripheralType type, PointerEvent event) {
@@ -305,12 +305,13 @@ class WebPointerEvent {
     return wpe;
   }
 
-  static WebPointerEvent convertDragEvent(BuildContext context, event) {
+  static WebPointerEvent convertDragEvent(BuildContext context, event, int pointerCount) {
     final wpe = WebPointerEvent();
 
     wpe.pointerId = 512;
     wpe.pointerType = 'touch_pad';
     wpe.button = 0;
+    wpe.pointerCount = pointerCount;
 
     RenderBox getBox = context.findRenderObject() as RenderBox;
     final local = getBox.globalToLocal(event.globalPosition);
@@ -342,12 +343,13 @@ class WebPointerEvent {
 
     return wpe;
   }
-  static WebPointerEvent convertScaleEvent(BuildContext context, event) {
+  static WebPointerEvent convertScaleEvent(BuildContext context, event, int pointerCount) {
     final wpe = WebPointerEvent();
 
     wpe.pointerId = 522;
     wpe.pointerType = 'mouse';
     wpe.button = 4;
+    wpe.pointerCount = pointerCount;
 
     wpe.clientX = event['scale'];
     wpe.clientY = event['scale'];
@@ -381,11 +383,11 @@ class WebPointerEvent {
   factory WebPointerEvent.fromPointerEvent(BuildContext context, PointerEvent event, int pointerCount) {
     return convertPointerEvent(context, event, pointerCount);
   }
-  factory WebPointerEvent.fromDragEvent(BuildContext context, event) {
-    return convertDragEvent(context, event);
+  factory WebPointerEvent.fromDragEvent(BuildContext context, event, int pointerCount) {
+    return convertDragEvent(context, event, pointerCount);
   }
-  factory WebPointerEvent.fromScaleEvent(BuildContext context, event) {
-    return convertScaleEvent(context, event);
+  factory WebPointerEvent.fromScaleEvent(BuildContext context, event, int pointerCount) {
+    return convertScaleEvent(context, event, pointerCount);
   }
   @override
   String toString() {
